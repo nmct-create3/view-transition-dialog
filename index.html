@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>
+        Dialog test page
+    </h1>
+    <p>
+        <button id="showModalDialog">Show modal dialog</button>
+    </p>
+    <dialog id="modalDialog">
+        <header class="dialog__header">
+            <h2>Hi, I'm a dialog.</h2>
+            <button id="closeModalDialog">Close</button>
+        </header>
+        <div class="dialog__body">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi molestiae dolorem distinctio? Magnam sit mollitia sapiente adipisci totam quod, earum autem eaque
+            </p>
+        </div>
+    </dialog>
+    <script>
+        const $showModalDialog = document.getElementById('showModalDialog');
+        const $closeModalDialog = document.getElementById('closeModalDialog');
+        const $dialog = document.getElementById('modalDialog');
+
+        $showModalDialog.addEventListener('click', () => {
+            const transition = document.startViewTransition(() => $dialog.showModal());
+        });
+
+        $closeModalDialog.addEventListener('click', () => {
+            const transition = document.startViewTransition(() => $dialog.close());
+        });
+
+        // listen to the modal close event and start a view transition
+        // const dialog = document.getElementById('modalDialog');
+        // $dialog.addEventListener('close', (e) => {
+        //     e.preventDefault();
+        //     const transition = document.startViewTransition(() => $dialog.close());
+        // });
+    </script>
+</body>
+
+</html>
