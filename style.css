@@ -1,5 +1,4 @@
 @import "https://unpkg.com/open-props";
-@import "https://unpkg.com/open-props/gray-hsl.min.css";
 
 @keyframes fade-in {
     from {
@@ -52,6 +51,7 @@ html {
     font-family: var(--font-sans);
     line-height: 1.5;
     padding: var(--size-5);
+    color: var(--gray-7);
 }
 
 body,
@@ -69,6 +69,23 @@ ul {
     font-size: 100%;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--gray-9);
+    font-weight: 600;
+}
+
+img,
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 #modalDialog {
     view-transition-name: dialog;
 }
@@ -84,6 +101,7 @@ ul {
 }
 
 dialog {
+    color: inherit;
     border: none;
     width: 100%;
     max-width: 400px;
@@ -92,12 +110,14 @@ dialog {
     box-shadow: var(--shadow-4);
 
     &::backdrop {
-        background-color: hsl(var(--gray-9-hsl) / 30%);
+        background-color: black;
+        opacity: .35;
     }
 }
 
 button {
     font: inherit;
+    color: inherit;
     border: none;
     background: none;
     padding: 0;
@@ -106,8 +126,11 @@ button {
 
 .dialog__header {
     padding: var(--size-5);
-    border-bottom: 1px solid var(--gray-2);
+    /* border-bottom: 1px solid var(--gray-2); */
     background-color: var(--gray-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .dialog__body {

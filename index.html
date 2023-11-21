@@ -19,11 +19,17 @@
     <dialog id="modalDialog">
         <header class="dialog__header">
             <h2>Hi, I'm a dialog.</h2>
-            <button id="closeModalDialog">Close</button>
+            <button id="closeModalDialog" title="Close dialog" aria-label="auto" aria-live="polite">
+                <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+                    <rect width="256" height="256" fill="none" />
+                    <line x1="200" y1="56" x2="56" y2="200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                    <line x1="200" y1="200" x2="56" y2="56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                </svg>
+            </button>
         </header>
         <div class="dialog__body">
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi molestiae dolorem distinctio? Magnam sit mollitia sapiente adipisci totam quod, earum autem eaque
+                You can close me by clicking the close button or pressing the escape key. Clicking outside me will not close me. Also, with the escape key, view transitions don't seem to work.
             </p>
         </div>
     </dialog>
