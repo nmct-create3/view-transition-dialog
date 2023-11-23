@@ -19,7 +19,7 @@
             There are several ways to achieve this. Adam Argyle wrote an <a href="https://web.dev/articles/building/a-dialog-component">extensive article</a> about building an animating it. Some of the techniques here are based on his. There's an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#animating_dialogs">example on MDN</a> too. The main problem is that it flips between display:none and display:block when opening it and closing it. Which are impossible to animate by default. So in order to create a custom animation you need to work around that, making it rather complex to do.
         </p>
         <p>
-            With the View Transition API it's fairly simple. All you have to do is call the <code>showModal()</code> and <code>close()</code> functions inside the <code>startViewTransition()</code> callback. If you want to add a custom animation you need to give the dialog a view-transition-name property. You can then control the animation with CSS.
+            With the View Transition API it's fairly simple. All you have to do is call the <code>showModal()</code> and <code>close()</code> functions inside the <code>startViewTransition()</code> callback. If you want to add a custom animation you need to set the dialog's <code>view-transition-name</code> property. You can then control the animation with CSS with <code>::view-transition-new()</code> and <code>::view-transition-old()</code>.
         </p>
         <button class="btn" id="showModalDialog">Show a modal dialog</button>
     </div>

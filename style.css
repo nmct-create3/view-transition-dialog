@@ -157,6 +157,11 @@ code {
     font-family: var(--font-monospace);
     /* font-style: italic; */
     color: var(--global-titleColor);
+    font-size: 0.9375rem;
+    font-size: 0.875rem;
+    background-color: var(--global-surfaceColor-2);
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-conditional-2);
 }
 
 .container {
@@ -197,7 +202,7 @@ dialog {
     color: inherit;
     border: none;
     width: 100%;
-    max-width: calc(600px + 3rem);
+    width: min(calc(100vw - calc(var(--size-5) * 2)), calc(36rem + calc(var(--size-5) * 2)));
     border-radius: var(--radius-2);
     padding: 0;
     margin: auto;
