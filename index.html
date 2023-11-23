@@ -10,16 +10,24 @@
 </head>
 
 <body>
-    <h1>
-        Dialog test page
-    </h1>
-    <p>
-        <button id="showModalDialog">Show modal dialog</button>
-    </p>
+    <div class="flow container">
+        <h1>
+            Modal dialog animation test page
+        </h1>
+        <p>
+            By default the <code>&lt;dialog&gt;</code> element doesn't animate when opened or closed.
+            There are several ways to achieve this. Adam Argyle wrote an <a href="https://web.dev/articles/building/a-dialog-component">extensive article</a> about building an animating it. Some of the techniques here are based on his. There's an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#animating_dialogs">example on MDN</a> too. The main problem is that it flips between display:none and display:block when opening it and closing it. Which are impossible to animate by default. So in order to create a custom animation you need to work around that, making it rather complex to do.
+        </p>
+        <p>
+            With the View Transition API it's fairly simple. All you have to do is call the <code>showModal()</code> and <code>close()</code> functions inside the <code>startViewTransition()</code> callback. If you want to add a custom animation you need to give the dialog a view-transition-name property. You can then control the animation with CSS.
+        </p>
+        <button class="btn" id="showModalDialog">Show a modal dialog</button>
+    </div>
+
     <dialog id="modalDialog">
         <header class="dialog__header">
-            <h2>Hi, I'm a dialog.</h2>
-            <button id="closeModalDialog" title="Close dialog" aria-label="auto" aria-live="polite">
+            <h2>I'm a dialog</h2>
+            <button class="dialog__close" id="closeModalDialog" title="Close dialog" aria-label="auto" aria-live="polite">
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                     <rect width="256" height="256" fill="none" />
                     <line x1="200" y1="56" x2="56" y2="200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
@@ -29,7 +37,7 @@
         </header>
         <div class="dialog__body">
             <p>
-                You can close me by clicking the close button or pressing the escape key. Clicking outside me will not close me. Also, with the escape key, view transitions don't seem to work.
+                You can close me by clicking the close button or pressing the escape key. Clicking outside me will not close me by default. Also, with the escape key, the transition doesn't get triggered. So you need to write your own logic. I'm not entirely sure this is the best way but this purely is a demo to show how to animate it with the View Transition API.
             </p>
         </div>
     </dialog>
@@ -37,21 +45,67 @@
         const $showModalDialog = document.getElementById('showModalDialog');
         const $closeModalDialog = document.getElementById('closeModalDialog');
         const $dialog = document.getElementById('modalDialog');
+        let dialogOpen = false;
 
-        $showModalDialog.addEventListener('click', () => {
-            const transition = document.startViewTransition(() => $dialog.showModal());
-        });
+        const lightDismiss = (e) => {
+            const dialog = e.target;
+            if (dialog.nodeName === 'DIALOG') {
+                closeModal();
+            }
+        }
 
-        $closeModalDialog.addEventListener('click', () => {
-            const transition = document.startViewTransition(() => $dialog.close());
-        });
+        const closeModal = () => {
+            const transition = document.startViewTransition(() => {
+                $dialog.close();
+                checkDialogOpen();
+                // remove the view-transition-name css property from the dialog after the transition has ended
+                $dialog.style.removeProperty('view-transition-name');
+            });
+        }
 
-        // listen to the modal close event and start a view transition
-        // const dialog = document.getElementById('modalDialog');
-        // $dialog.addEventListener('close', (e) => {
-        //     e.preventDefault();
-        //     const transition = document.startViewTransition(() => $dialog.close());
-        // });
+        const openModal = () => {
+            // add the view-transition-name css property to the dialog
+            $dialog.style.setProperty('view-transition-name', 'dialog');
+            const transition = document.startViewTransition(() => {
+                $dialog.showModal();
+                checkDialogOpen();
+            });
+        }
+
+        const checkDialogOpen = () => {
+            if ($dialog.open) {
+                dialogOpen = true;
+                return dialogOpen;
+            }
+            else {
+                dialogOpen = false;
+                return dialogOpen;
+            }
+        }
+
+        const init = () => {
+            $showModalDialog.addEventListener('click', () => {
+                openModal();
+            });
+
+            $closeModalDialog.addEventListener('click', () => {
+                closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && dialogOpen) {
+                    e.preventDefault();
+                    closeModal();
+                }
+            });
+
+            $dialog.addEventListener('click', (e) => {
+                lightDismiss(e);
+            });
+        }
+
+        init();
+
     </script>
 </body>
 

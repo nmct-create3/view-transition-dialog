@@ -41,9 +41,56 @@
     --duration-x-fast: 200ms;
     --duration-fast: 300ms;
     --duration: 400ms;
+
+    --global-textColor: var(--gray-7);
+    --global-titleColor: var(--gray-9);
+    --global-metaColor: var(--gray-6);
+    --global-backgroundColor: white;
+
+    --global-borderColor: var(--gray-2);
+
+    --global-surfaceColor: var(--global-backgroundColor);
+    --global-surfaceColor-2: var(--gray-1);
+    --global-surfaceColor-3: var(--gray-2);
+
+    --global-linkColor: var(--global-titleColor);
+    --global-linkColor-hover: var(--global-textColor);
+
+    --font-monospace: ui-monospace,
+        Menlo,
+        Monaco,
+        "Cascadia Mono",
+        "Segoe UI Mono",
+        "Roboto Mono",
+        "Oxygen Mono",
+        "Ubuntu Monospace",
+        "Source Code Pro",
+        "Fira Mono",
+        "Droid Sans Mono",
+        "Courier New",
+        monospace;
+
+
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-textColor: var(--gray-4);
+        --global-titleColor: var(--gray-1);
+        --global-metaColor: var(--gray-5);
+        --global-backgroundColor: var(--gray-11);
+
+        --global-borderColor: var(--gray-8);
+
+        --global-surfaceColor: var(--gray-9);
+        --global-surfaceColor-2: var(--gray-10);
+        --global-surfaceColor-3: var(--global-backgroundColor);
+    }
+
 }
 
 * {
+    margin: 0;
     box-sizing: border-box;
 }
 
@@ -51,32 +98,28 @@ html {
     font-family: var(--font-sans);
     line-height: 1.5;
     padding: var(--size-5);
-    color: var(--gray-7);
+    color: var(--global-textColor);
+    background-color: var(--global-backgroundColor);
+
+    /* font smoothing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-    margin: 0;
-    padding: 0;
-    font-size: 100%;
+body {
+    padding: var(--size-5);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--gray-9);
-    font-weight: 600;
+h1 {
+    font-size: 1.5rem;
+    color: var(--global-titleColor);
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 1.25rem;
+    color: var(--global-titleColor);
+    font-weight: 500;
 }
 
 img,
@@ -86,8 +129,58 @@ svg {
     display: block;
 }
 
-#modalDialog {
-    view-transition-name: dialog;
+button {
+    font: inherit;
+    color: inherit;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+
+    &:focus-visible {
+        outline-offset: 3px;
+        outline-color: var(--indigo-6);
+        outline-style: solid;
+    }
+}
+
+a {
+    color: var(--global-linkColor);
+    /* text-decoration: none; */
+
+    &:hover {
+        color: var(--global-linkColor-hover);
+    }
+}
+
+code {
+    font-family: var(--font-monospace);
+    /* font-style: italic; */
+    color: var(--global-titleColor);
+}
+
+.container {
+    max-width: 36rem;
+    margin: auto;
+}
+
+.flow {
+    >*+* {
+        margin-top: var(--size-5);
+    }
+
+    >*+button {
+        margin-top: var(--size-6);
+    }
+}
+
+.btn {
+    background-color: var(--global-surfaceColor-2);
+    border: 1px solid var(--global-borderColor);
+    padding: var(--size-2) var(--size-4);
+    border-radius: var(--radius-conditional-2);
+    font-weight: 500;
+    color: var(--global-titleColor);
 }
 
 ::view-transition-new(dialog) {
@@ -104,30 +197,24 @@ dialog {
     color: inherit;
     border: none;
     width: 100%;
-    max-width: 400px;
+    max-width: calc(600px + 3rem);
     border-radius: var(--radius-2);
     padding: 0;
+    margin: auto;
     box-shadow: var(--shadow-4);
+    background-color: var(--global-surfaceColor);
 
     &::backdrop {
-        background-color: black;
-        opacity: .35;
+        /* background-color: black;
+        opacity: .35; */
+        backdrop-filter: blur(5px);
     }
-}
-
-button {
-    font: inherit;
-    color: inherit;
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
 }
 
 .dialog__header {
     padding: var(--size-5);
-    /* border-bottom: 1px solid var(--gray-2); */
-    background-color: var(--gray-1);
+    background-color: var(--global-surfaceColor-2);
+    /* border-bottom: 1px solid var(--global-borderColor); */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -135,4 +222,16 @@ button {
 
 .dialog__body {
     padding: var(--size-5);
+}
+
+.dialog__close {
+    border-radius: 100%;
+
+    &:focus-visible {
+        outline-offset: 10px;
+    }
+}
+
+.text-align-center {
+    text-align: center;
 }
