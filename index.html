@@ -16,10 +16,10 @@
         </h1>
         <p>
             By default the <code>&lt;dialog&gt;</code> element doesn't animate when opened or closed.
-            There are several ways to achieve this. Adam Argyle wrote an <a href="https://web.dev/articles/building/a-dialog-component">extensive article</a> about building an animating it. Some of the techniques here are based on his. There's an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#animating_dialogs">example on MDN</a> too. The main problem is that it flips between display:none and display:block when opening it and closing it. Which are impossible to animate by default. So in order to create a custom animation you need to work around that, making it rather complex to do.
+            There are several ways to achieve this. Adam Argyle wrote an <a href="https://web.dev/articles/building/a-dialog-component" target="_blank">extensive article</a> about building an animating it. Some of the techniques here are based on his. There's an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog#animating_dialogs" target="_blank">example on MDN</a> too. Una Kravets <a href="https://codepen.io/una/pen/YzJgzxo" target="_blank">example</a> works the same way.
         </p>
         <p>
-            With the View Transition API it's fairly simple. All you have to do is call the <code>showModal()</code> and <code>close()</code> functions inside the <code>startViewTransition()</code> callback. If you want to add a custom animation you need to set the dialog's <code>view-transition-name</code> property. You can then control the animation with CSS with <code>::view-transition-new()</code> and <code>::view-transition-old()</code>.
+            With the View Transition API it's fairly simple. All you have to do is call the <code>showModal()</code> and <code>close()</code> functions inside the <code>startViewTransition()</code> callback. If you want to add a custom animation you need to set the dialog's <code>view-transition-name</code> property. You can then control the animation with CSS with <code>::view-transition-new()</code> and <code>::view-transition-old()</code>. The downside: the keyboard esc triggers a close event that's only executed after the dialog is already closed so it's not possible to trigger a new view transtion on that event.
         </p>
         <button class="btn" id="showModalDialog">Show a modal dialog</button>
     </div>
