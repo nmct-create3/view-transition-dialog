@@ -55,32 +55,11 @@
         }
 
         const closeModal = () => {
-            const transition = document.startViewTransition(() => {
-                $dialog.close();
-                checkDialogOpen();
-                // remove the view-transition-name css property from the dialog after the transition has ended
-                $dialog.style.removeProperty('view-transition-name');
-            });
+            $dialog.close();
         }
 
         const openModal = () => {
-            // add the view-transition-name css property to the dialog
-            $dialog.style.setProperty('view-transition-name', 'dialog');
-            const transition = document.startViewTransition(() => {
-                $dialog.showModal();
-                checkDialogOpen();
-            });
-        }
-
-        const checkDialogOpen = () => {
-            if ($dialog.open) {
-                dialogOpen = true;
-                return dialogOpen;
-            }
-            else {
-                dialogOpen = false;
-                return dialogOpen;
-            }
+            $dialog.showModal();
         }
 
         const init = () => {
@@ -90,13 +69,6 @@
 
             $closeModalDialog.addEventListener('click', () => {
                 closeModal();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && dialogOpen) {
-                    e.preventDefault();
-                    closeModal();
-                }
             });
 
             $dialog.addEventListener('click', (e) => {
